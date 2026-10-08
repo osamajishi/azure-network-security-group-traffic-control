@@ -93,3 +93,28 @@ Opened Microsoft Edge within the remote desktop session on `VM1` and navigated t
 ### Step 5: Add Inbound HTTP Security Rule
 
 Returned to the Azure Portal to configure an inbound security rule allowing web traffic over TCP port 80, placing it directly below the administrative rule in priority order.
+
+* **Rule Name:** `myport_80`
+* **Priority:** `110`
+* **Source:** `Internet`
+* **Destination Port:** `80`
+* **Protocol:** `TCP`
+* **Action:** `Allow`
+
+![Allow HTTP Inbound Rule](allow-http.png)
+
+*Evaluating updated inbound rules list reflecting priority 100 for RDP and priority 110 for HTTP.*
+
+---
+
+### Step 6: Validate External Web Traffic Ingress
+
+Tested end-to-end inbound packet inspection from an external browser client by navigating directly to the public IP address of `VM1`, confirming that `VM1-nsg` permitted ingress HTTP traffic through port 80.
+
+* **Target Destination:** `http://20.224.131.17`
+* **Service Port:** `80` (HTTP)
+* **Validation Result:** IIS landing page successfully rendered externally
+
+![Validate HTTP Over Internet](test-http-validate.png)
+
+*External browser session validating public reachability of the IIS server hosted on VM1.*
